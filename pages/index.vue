@@ -133,10 +133,21 @@ onMounted(() => {
       focus.classList.remove("p7")
     }
   }
+
+  const handleStepEnterFadeBg = (response) => {
+    const bg = document.querySelector(".last")
+    if (response.direction === "down") {
+      bg.style.backgroundColor = "black"
+    } else if (response.direction === "up") {
+      bg.style.backgroundColor = "white"
+    } else {
+      bg.style.backgroundColor = "white"
+    }
+  }
   const init = () => {
     scroller
       .setup({
-        step: ".box, .box2, .box3, .box-zoom, .box4, .box5, .focus",
+        step: ".box, .box2, .box3, .box-zoom, .box4, .box5, .focus , .fade-bg",
         offset: 0.9,
         debug: false,
       })
@@ -155,6 +166,8 @@ onMounted(() => {
           handleStepEnterBox5(response)
         } else if (response.element.classList.contains("focus")) {
           handleStepEnterFocus(response)
+        } else if (response.element.classList.contains("fade-bg")) {
+          handleStepEnterFadeBg(response)
         }
       })
 
@@ -446,122 +459,492 @@ onMounted(() => {
       </div>
     </div>
     <div
-      class="relative z-10 flex bg-white items-center justify-center flex-col py-32 gap-7"
+      class="relative z-10 flex bg-white items-center justify-center flex-col py-32 gap-3"
     >
-      <h1 class="h1 my-10">ชีวิตในบ้าน</h1>
-      <img src="/house.jpg" alt="" class="w-[620px]" />
       <div
-        class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
-        @click="handleBox1"
+        class="relative flex items-center justify-center flex-col py-32 gap-7"
       >
-        <div class="text-3xl mr-4">
-          <PlusIcon v-if="!box1" />
-          <MinusIcon v-else />
+        <h1 class="h1 my-10">ชีวิตในบ้าน</h1>
+        <img src="/house.jpg" alt="" class="w-[620px]" />
+        <div
+          class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
+          @click="handleBox1"
+        >
+          <div class="text-3xl mr-4">
+            <PlusIcon v-if="!box1" />
+            <MinusIcon v-else />
+          </div>
+          <div
+            class="bg-black rounded-2xl text-white grid grid-cols-2 gap-10 w-full p-8 max-w-5xl text-start"
+          >
+            <div class="space-y-3">
+              <h1 class="text-4xl">
+                การ "พลัดตกหกล้ม" จากโครงสร้างที่ไม่รับประกันความปลอดภัย
+              </h1>
+              <p class="text-zinc-400">
+                กดเพื่อ<span v-if="!box1">ดู</span
+                ><span v-else>ซ่อน</span>รายละเอียด
+              </p>
+            </div>
+            <div class="text-xl">
+              <p>ผู้สูงอายุ</p>
+              <p>คนพิการทางการมองเห็น</p>
+              <p>คนพิการทางการเคลื่อนไหว</p>
+            </div>
+          </div>
+        </div>
+        <div v-show="box1" class="content max-w-[650px] text-[24px]">
+          การพลัดตกหกล้มในผู้สูงอายุเป็นสาเหตุการเสียชีวิตอันดับสอง
+          รองจากอุบัติเหตุจากการขนส่ง มีผู้เสียชีวิตมากกว่า 1,000 คนต่อปี
+          อ้างอิงจาก ข้อมูลมรณบัตร กองยุทธศาสตร์และแผนงาน
+          สำนักงานปลัดกระทรวงสาธารณสุข
         </div>
         <div
-          class="bg-black rounded-2xl text-white grid grid-cols-2 gap-10 w-full p-8 max-w-5xl text-start"
+          class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
+          @click="handleBox2"
         >
-          <div>
-            <h1 class="text-4xl">
-              การ "พลัดตกหกล้ม" จากโครงสร้างที่ไม่รับประกันความปลอดภัย
-            </h1>
-            <p class="text-zinc-600">
-              กดเพื่อ<span v-if="!box1">ดู</span
-              ><span v-else>ซ่อน</span>รายละเอียด
-            </p>
+          <div class="text-3xl mr-4">
+            <PlusIcon v-if="!box2" />
+            <MinusIcon v-else />
           </div>
-          <div class="text-xl">
-            <p>ผู้สูงอายุ</p>
-            <p>คนพิการทางการมองเห็น</p>
-            <p>คนพิการทางการเคลื่อนไหว</p>
+          <div
+            class="bg-black rounded-2xl text-white w-full grid grid-cols-2 gap-10 p-8 max-w-5xl text-start"
+          >
+            <div class="space-y-3">
+              <h1 class="text-4xl">การตกแต่งบ้านที่ฉูดฉาดเกินไป</h1>
+              <p class="text-zinc-400">
+                กดเพื่อ<span v-if="!box1">ดู</span
+                ><span v-else>ซ่อน</span>รายละเอียด
+              </p>
+            </div>
+            <div class="text-xl">
+              <p>ออทิสติก</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div v-show="box1" class="content max-w-[650px] text-[24px]">
-        การพลัดตกหกล้มในผู้สูงอายุเป็นสาเหตุการเสียชีวิตอันดับสอง
-        รองจากอุบัติเหตุจากการขนส่ง มีผู้เสียชีวิตมากกว่า 1,000 คนต่อปี
-        อ้างอิงจาก ข้อมูลมรณบัตร กองยุทธศาสตร์และแผนงาน
-        สำนักงานปลัดกระทรวงสาธารณสุข
+        <div v-show="box2" class="content max-w-[650px] text-[24px]">
+          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
+          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
+          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
+          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
+          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
+          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
+          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
+          รู้สึกอึดอัดหรือไม่สบายใจได้
+          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        </div>
       </div>
       <div
-        class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
-        @click="handleBox2"
+        class="relative flex items-center justify-center flex-col py-32 gap-3"
       >
-        <div class="text-3xl mr-4">
-          <PlusIcon v-if="!box2" />
-          <MinusIcon v-else />
+        <h1 class="h1 my-10">ชีวิตกับการเดินทาง</h1>
+        <img
+          src="https://d24sx0drox09ud.cloudfront.net/transport.jpg"
+          alt=""
+          class="w-full"
+        />
+        <div
+          class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
+          @click="handleBox1"
+        >
+          <div class="text-3xl mr-4">
+            <PlusIcon v-if="!box1" />
+            <MinusIcon v-else />
+          </div>
+          <div
+            class="bg-black rounded-2xl text-white grid grid-cols-2 gap-10 w-full p-8 max-w-5xl text-start"
+          >
+            <div class="space-y-3">
+              <h1 class="text-4xl">ชีวิตบนทางเท้ากับอุปสรรคในรูปแบบต่าง ๆ</h1>
+              <p class="text-zinc-400">
+                กดเพื่อ<span v-if="!box1">ดู</span
+                ><span v-else>ซ่อน</span>รายละเอียด
+              </p>
+            </div>
+            <div class="text-xl">
+              <p>ผู้สูงอายุ</p>
+              <p>คนพิการทางการมองเห็น</p>
+              <p>คนพิการทางการเคลื่อนไหว</p>
+            </div>
+          </div>
+        </div>
+        <div v-show="box1" class="content max-w-[650px] text-[24px]">
+          การพลัดตกหกล้มในผู้สูงอายุเป็นสาเหตุการเสียชีวิตอันดับสอง
+          รองจากอุบัติเหตุจากการขนส่ง มีผู้เสียชีวิตมากกว่า 1,000 คนต่อปี
+          อ้างอิงจาก ข้อมูลมรณบัตร กองยุทธศาสตร์และแผนงาน
+          สำนักงานปลัดกระทรวงสาธารณสุข
         </div>
         <div
-          class="bg-black rounded-2xl text-white w-full grid grid-cols-2 gap-10 p-8 max-w-5xl text-start"
+          class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
+          @click="handleBox2"
         >
-          <div>
-            <h1 class="text-4xl">การตกแต่งบ้านที่ฉูดฉาดเกินไป</h1>
-            <p class="text-zinc-600">
-              กดเพื่อ<span v-if="!box1">ดู</span
-              ><span v-else>ซ่อน</span>รายละเอียด
-            </p>
+          <div class="text-3xl mr-4">
+            <PlusIcon v-if="!box2" />
+            <MinusIcon v-else />
           </div>
-          <div class="text-xl">
-            <p>ออทิสติก</p>
+          <div
+            class="bg-black rounded-2xl text-white w-full grid grid-cols-2 gap-10 p-8 max-w-5xl text-start"
+          >
+            <div class="space-y-3">
+              <h1 class="text-4xl">เบรลล์บล็อกที่ไม่ต่อเนื่อง</h1>
+              <p class="text-zinc-400">
+                กดเพื่อ<span v-if="!box1">ดู</span
+                ><span v-else>ซ่อน</span>รายละเอียด
+              </p>
+            </div>
+            <div class="text-xl">
+              <p>คนพิการทางการมองเห็น</p>
+            </div>
           </div>
         </div>
+        <div v-show="box2" class="content max-w-[650px] text-[24px]">
+          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
+          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
+          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
+          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
+          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
+          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
+          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
+          รู้สึกอึดอัดหรือไม่สบายใจได้
+          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        </div>
+        <div
+          class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
+          @click="handleBox2"
+        >
+          <div class="text-3xl mr-4">
+            <PlusIcon v-if="!box2" />
+            <MinusIcon v-else />
+          </div>
+          <div
+            class="bg-black rounded-2xl text-white w-full grid grid-cols-2 gap-10 p-8 max-w-5xl text-start"
+          >
+            <div class="space-y-3">
+              <h1 class="text-4xl">
+                รถไฟฟ้าและสิ่งอำนวยความสะดวกที่ไม่ได้มีทุกทางออก
+              </h1>
+              <p class="text-zinc-400">
+                กดเพื่อ<span v-if="!box1">ดู</span
+                ><span v-else>ซ่อน</span>รายละเอียด
+              </p>
+            </div>
+            <div class="text-xl">
+              <p>ผู้สูงอายุ</p>
+              <p>คนพิการทางการมองเห็น</p>
+              <p>คนพิการทางการเคลื่อนไหว</p>
+            </div>
+          </div>
+        </div>
+        <div v-show="box2" class="content max-w-[650px] text-[24px]">
+          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
+          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
+          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
+          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
+          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
+          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
+          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
+          รู้สึกอึดอัดหรือไม่สบายใจได้
+          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        </div>
+        <div
+          class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
+          @click="handleBox2"
+        >
+          <div class="text-3xl mr-4">
+            <PlusIcon v-if="!box2" />
+            <MinusIcon v-else />
+          </div>
+          <div
+            class="bg-black rounded-2xl text-white w-full grid grid-cols-2 gap-10 p-8 max-w-5xl text-start"
+          >
+            <div class="space-y-3">
+              <h1 class="text-4xl">รถเมล์ที่ไม่ใช่ทุกคนจะขึ้นสะดวก</h1>
+              <p class="text-zinc-400">
+                กดเพื่อ<span v-if="!box1">ดู</span
+                ><span v-else>ซ่อน</span>รายละเอียด
+              </p>
+            </div>
+            <div class="text-xl">
+              <p>ผู้สูงอายุ</p>
+              <p>คนพิการทางการมองเห็น</p>
+              <p>คนพิการทางการเคลื่อนไหว</p>
+            </div>
+          </div>
+        </div>
+        <div v-show="box2" class="content max-w-[650px] text-[24px]">
+          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
+          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
+          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
+          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
+          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
+          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
+          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
+          รู้สึกอึดอัดหรือไม่สบายใจได้
+          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        </div>
       </div>
-      <div v-show="box2" class="content max-w-[650px] text-[24px]">
-        การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
-        อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
-        แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
-        ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
-        ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
-        สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
-        เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
-        รู้สึกอึดอัดหรือไม่สบายใจได้
-        เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+      <div
+        class="relative flex items-center justify-center flex-col py-32 gap-3"
+      >
+        <h1 class="h1 my-10">ชีวิตในพื้นที่สาธารณะ</h1>
+        <img
+          src="https://d24sx0drox09ud.cloudfront.net/public.jpg"
+          alt=""
+          class="w-full"
+        />
+        <div
+          class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
+          @click="handleBox1"
+        >
+          <div class="text-3xl mr-4">
+            <PlusIcon v-if="!box1" />
+            <MinusIcon v-else />
+          </div>
+          <div
+            class="bg-black rounded-2xl text-white grid grid-cols-2 gap-10 w-full p-8 max-w-5xl text-start"
+          >
+            <div class="space-y-3">
+              <h1 class="text-4xl">ป้ายชวนสับสน</h1>
+              <p class="text-zinc-400">
+                กดเพื่อ<span v-if="!box1">ดู</span
+                ><span v-else>ซ่อน</span>รายละเอียด
+              </p>
+            </div>
+            <div class="text-xl">
+              <p>ผู้สูงอายุ</p>
+              <p>คนพิการทางการมองเห็น</p>
+              <p>คนพิการทางการได้ยิน</p>
+              <p>คนพิการด้านสติปัญญา</p>
+              <p>คนพิการทางการเรียนรู้</p>
+            </div>
+          </div>
+        </div>
+        <div v-show="box1" class="content max-w-[650px] text-[24px]">
+          การพลัดตกหกล้มในผู้สูงอายุเป็นสาเหตุการเสียชีวิตอันดับสอง
+          รองจากอุบัติเหตุจากการขนส่ง มีผู้เสียชีวิตมากกว่า 1,000 คนต่อปี
+          อ้างอิงจาก ข้อมูลมรณบัตร กองยุทธศาสตร์และแผนงาน
+          สำนักงานปลัดกระทรวงสาธารณสุข
+        </div>
+        <div
+          class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
+          @click="handleBox2"
+        >
+          <div class="text-3xl mr-4">
+            <PlusIcon v-if="!box2" />
+            <MinusIcon v-else />
+          </div>
+          <div
+            class="bg-black rounded-2xl text-white w-full grid grid-cols-2 gap-10 p-8 max-w-5xl text-start"
+          >
+            <div class="space-y-3">
+              <h1 class="text-4xl">สวนสาธารณะมีสิ่งอำนวยความสะดวกไม่เพียงพอ</h1>
+              <p class="text-zinc-400">
+                กดเพื่อ<span v-if="!box1">ดู</span
+                ><span v-else>ซ่อน</span>รายละเอียด
+              </p>
+            </div>
+            <div class="text-xl">
+              <p>คนพิการทางการได้ยิน</p>
+            </div>
+          </div>
+        </div>
+        <div v-show="box2" class="content max-w-[650px] text-[24px]">
+          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
+          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
+          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
+          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
+          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
+          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
+          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
+          รู้สึกอึดอัดหรือไม่สบายใจได้
+          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        </div>
+        <div
+          class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
+          @click="handleBox2"
+        >
+          <div class="text-3xl mr-4">
+            <PlusIcon v-if="!box2" />
+            <MinusIcon v-else />
+          </div>
+          <div
+            class="bg-black rounded-2xl text-white w-full grid grid-cols-2 gap-10 p-8 max-w-5xl text-start"
+          >
+            <div class="space-y-3">
+              <h1 class="text-4xl">การเลือกซื้อสินค้า</h1>
+              <p class="text-zinc-400">
+                กดเพื่อ<span v-if="!box1">ดู</span
+                ><span v-else>ซ่อน</span>รายละเอียด
+              </p>
+            </div>
+            <div class="text-xl">
+              <p>คนพิการทางการมองเห็น</p>
+            </div>
+          </div>
+        </div>
+        <div v-show="box2" class="content max-w-[650px] text-[24px]">
+          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
+          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
+          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
+          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
+          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
+          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
+          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
+          รู้สึกอึดอัดหรือไม่สบายใจได้
+          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        </div>
+        <div
+          class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
+          @click="handleBox2"
+        >
+          <div class="text-3xl mr-4">
+            <PlusIcon v-if="!box2" />
+            <MinusIcon v-else />
+          </div>
+          <div
+            class="bg-black rounded-2xl text-white w-full grid grid-cols-2 gap-10 p-8 max-w-5xl text-start"
+          >
+            <div class="space-y-3">
+              <h1 class="text-4xl">สถานที่พลุกพล่าน</h1>
+              <p class="text-zinc-400">
+                กดเพื่อ<span v-if="!box1">ดู</span
+                ><span v-else>ซ่อน</span>รายละเอียด
+              </p>
+            </div>
+            <div class="text-xl">
+              <p>ออทิสติก</p>
+            </div>
+          </div>
+        </div>
+        <div v-show="box2" class="content max-w-[650px] text-[24px]">
+          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
+          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
+          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
+          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
+          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
+          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
+          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
+          รู้สึกอึดอัดหรือไม่สบายใจได้
+          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        </div>
       </div>
     </div>
-    <div class="h-screen bg-black relative flex justify-center items-center">
-      <img
-        class="people1 peop"
-        src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_1.f5fcff0.svg"
-        alt=""
-      />
-      <img
-        class="people2 peop"
-        src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_2.52aee37.svg"
-        alt=""
-      /><img
-        class="people3 peop"
-        src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_3.9b77f65.svg"
-        alt=""
-      />
-      <img
-        class="people4 peop"
-        src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_4.fec17ba.svg
+    <div
+      class="last bg-white relative"
+      style="transition: opacity 1s, transform 1s"
+    >
+      <div class="h-screen flex justify-center items-center">
+        <div class="fade-bg text-white text-center space-y-6">
+          <h1 class="text-4xl">จากการออกแบบทีทอดทิ้งใครหลายคนไว้ข้างหลัง</h1>
+          <h1 class="font-bold text-5xl">เราจะแก้ปัญหานี้กันอย่างไร</h1>
+        </div>
+        <img
+          class="people1 peop"
+          src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_1.f5fcff0.svg"
+          alt=""
+        />
+        <img
+          class="people2 peop"
+          src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_2.52aee37.svg"
+          alt=""
+        /><img
+          class="people3 peop"
+          src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_3.9b77f65.svg"
+          alt=""
+        />
+        <img
+          class="people4 peop"
+          src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_4.fec17ba.svg
 "
-        alt=""
-      /><img
-        class="people5 peop"
-        src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_5.82b072c.svg"
-        alt=""
-      />
-      <img
-        class="people6 peop"
-        src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_6.1ac5eff.svg"
-        alt=""
-      />
+          alt=""
+        /><img
+          class="people5 peop"
+          src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_5.82b072c.svg"
+          alt=""
+        />
+        <img
+          class="people6 peop"
+          src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_6.1ac5eff.svg"
+          alt=""
+        />
 
-      <img
-        class="people7 peop"
-        src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_7.810f260.svg
+        <img
+          class="people7 peop"
+          src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/people_7.810f260.svg
 "
-        alt=""
-      />
-    </div>
-    <div class="h-screen relative bg-black flex items-center justify-center">
-      <div
-        class="focus z-40 bg-white text-black rounded-full w-20 h-20 text-center flex items-center justify-center"
-      >
-        hi
+          alt=""
+        />
       </div>
+
+      <div class="h-screen flex flex-col items-center justify-center gap-10">
+        <h1 class="text-white text-4xl text-wrap w-2/6 text-center">
+          ในวงสนทนาเรื่องการออกแบบทั่วโลก
+          มีการพูดคุยถึงแนวคิดการออกแบบเพื่อคนทุกคนหรือที่เรียกกันว่า
+        </h1>
+        <div
+          class="focus z-40 bg-white text-black rounded-full w-20 h-20 text-center flex items-center justify-center"
+        >
+          hi
+        </div>
+        <h1 class="text-white text-center font-bold text-6xl">
+          Universal <br />Design
+        </h1>
+      </div>
+      <div
+        class="flex flex-col items-center justify-center text-black w-2/5 mx-auto gap-20"
+      >
+        <p class="text-3xl content text-center">
+          Universal Design
+          เป็นการออกแบบที่คำนึงถึงการเข้าถึงและใช้ประโยชน์อย่างเท่าเทียมกันของคนทุกกลุ่มไม่ว่าจะเป็น
+          ผู้สูงอายุ เด็ก คนพิการ คนป่วย สตรีมีครรภ์ ฯลฯ
+          โดยไม่ได้หมายรวมแค่การออกแบบสิ่งแวดล้อม สถานที่
+          สิ่งอำนวยความสะดวกเพียงเท่านี้ แต่รวมถึง การบริการรูปแบบต่าง ๆ อีกด้วย
+          โดยอาจเรียกรวม ๆ ว่า Urban Design
+        </p>
+        <p class="text-3xl font-bold">
+          Universal Design ให้ความสำคัญกับองค์ประกอบ 7 อย่าง
+        </p>
+        <div>
+          <div class="rules">
+            <h1 class="text-red-500">Fairness</h1>
+            <p>ความเสมอภาคในการใช้งาน</p>
+          </div>
+          <div class="rules">
+            <h1 class="text-orange-400">Flexibility</h1>
+            <p>ความยืดหยุ่นในการใช้งาน</p>
+          </div>
+          <div class="rules">
+            <h1 class="text-yellow-300">Simplicity</h1>
+            <p>มีความเรียบง่ายและเข้าใจง่าย</p>
+          </div>
+          <div class="rules">
+            <h1 class="text-red-300">Understanding</h1>
+            <p>มีข้อมูลเพียงพอสำหรับการใช้งาน</p>
+          </div>
+          <div class="rules">
+            <h1 class="text-purple-300">Safety</h1>
+            <p>ทนทานต่อการใช้งานที่ผิดพลาด</p>
+          </div>
+          <div class="rules">
+            <h1 class="text-cyan-700">Energy Conservation</h1>
+            <p>สามารถทุ่นแรง</p>
+          </div>
+          <div class="rules">
+            <h1 class="text-cyan-300">Space</h1>
+            <p>มีขนาดและพื้นที่ที่เหมาะสม</p>
+          </div>
+        </div>
+        <p class="text- text-3xl content text-center text-wrap mb-40 mt-20">
+          โดยหลักการเหล่านี้ ไม่เพียงแค่นักออกแบบ วิศวกร
+          หรือสถาปนิกเท่านั้นที่ต้องคำนึงถึง
+          แต่หากเราตั้งใจจะสร้างเมืองที่เหมาะสมกับทุกคน.....อย่างแท้จริง
+          <span class="font-bold"> Universal Design</span> ก็เป็นแนวคิดที่ทุกคนในสังคมต้องใส่ใจ และให้ความสำคัญ
+        </p>
+      </div>
+    </div>
+    <div class="flex flex-col items-center justify-center">
+      <h1>มาดูกันดีกว่าว่า Universal Design ช่วยแก้ปัญหาอะไรให้เราได้บ้าง</h1>
+
     </div>
   </div>
 </template>
@@ -571,6 +954,20 @@ onMounted(() => {
 @import url("https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300;400;500;600;700&display=swap");
 * {
   scroll-behavior: smooth;
+}
+.rules {
+  text-align: center;
+}
+.rules h1 {
+  font-family: "Anuphan", sans-serif;
+  font-weight: 500;
+  font-size: 100px;
+}
+.rules p {
+  font-family: "Anuphan", sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  color: white;
 }
 @keyframes popup {
   from {
@@ -601,7 +998,7 @@ onMounted(() => {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 0; /* Set a z-index to make sure it's behind other elements */
+  z-index: 0;
   transition: opacity 1.5s ease;
 }
 
@@ -615,7 +1012,7 @@ onMounted(() => {
   }
 }
 .zoom-in {
-  transform: scale(2) !important;
+  transform: scale(2.5) translateY(8%) !important;
 }
 .fade-in {
   opacity: 1 !important;
@@ -626,22 +1023,26 @@ onMounted(() => {
 }
 
 .people1 {
-  top: 75%;
-  left: 65%;
+  top: 7%;
+  left: 80%;
+}
+
+.last {
+  transition: opacity 1s, transform 1s;
 }
 .p1 {
   z-index: 30 !important;
-  transform: translate(-320px, 672px);
+  transform: translate(-610px, 1099px);
 }
 
 .people2 {
-  top: 60%;
-  left: 80%;
+  top: 5%;
+  left: 67%;
 }
 
 .p2 {
   z-index: 30 !important;
-  transform: translate(-605px, 813px);
+  transform: translate(-355px, 1175px);
 }
 
 .p3 {
