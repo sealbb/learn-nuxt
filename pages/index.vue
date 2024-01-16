@@ -11,23 +11,27 @@ const handdlePolicy = () => {
   policy.value = false
 }
 
-const problems = ref([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
+const problems = ref([
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+])
 
 const handleProblem = (problem) => {
   problems.value[problem] = !problems.value[problem]
-}
-const box1 = ref(false)
-const handleBox1 = () => {
-  box1.value = !box1.value
-}
-const box2 = ref(false)
-const handleBox2 = () => {
-  box2.value = !box2.value
-}
-
-const box3 = ref(false)
-const handleBox3 = () => {
-  box3.value = !box3.value
 }
 
 const scroller = scrollama()
@@ -110,42 +114,95 @@ onMounted(() => {
     }
   }
 
+  // const handleStepEnterFocus = (response) => {
+  //   const p1 = document.querySelector(".people1")
+  //   const p2 = document.querySelector(".people2")
+  //   const p3 = document.querySelector(".people3")
+  //   const p4 = document.querySelector(".people4")
+  //   const p5 = document.querySelector(".people5")
+  //   const p6 = document.querySelector(".people6")
+  //   const p7 = document.querySelector(".people7")
+
+  //   const focus = document.querySelector(".focus")
+
+  //   const xF = focus.getBoundingClientRect().x
+  //   const yF = focus.getBoundingClientRect().y
+
+  //   const x1 = p1.getBoundingClientRect().x
+  //   const y1 = p1.getBoundingClientRect().y
+
+  //   const offsetX1 = xF - x1
+  //   const offsetY1 = yF - y1
+  //   if (response.direction === "down") {
+
+  //     p1.style.transform = `translate(${offsetX1}px, ${offsetY1}px)`
+
+  //     // p1.classList.add("p1")
+  //     p2.classList.add("p2")
+  //     p3.classList.add("p3")
+  //     p4.classList.add("p4")
+  //     p5.classList.add("p5")
+  //     p6.classList.add("p6")
+  //     p7.classList.add("p7")
+  //   } else if (response.direction === "up") {
+  //     p1.classList.remove("p1")
+  //     p2.classList.remove("p2")
+  //     p3.classList.remove("p3")
+  //     p4.classList.remove("p4")
+  //     p5.classList.remove("p5")
+  //     p6.classList.remove("p6")
+  //     p7.classList.remove("p7")
+  //   } else {
+  //     focus.classList.remove("p1")
+  //     focus.classList.remove("p2")
+  //     focus.classList.remove("p3")
+  //     focus.classList.remove("p4")
+  //     focus.classList.remove("p5")
+  //     focus.classList.remove("p6")
+  //     focus.classList.remove("p7")
+  //   }
+  // }
   const handleStepEnterFocus = (response) => {
-    const p1 = document.querySelector(".people1")
-    const p2 = document.querySelector(".people2")
-    const p3 = document.querySelector(".people3")
-    const p4 = document.querySelector(".people4")
-    const p5 = document.querySelector(".people5")
-    const p6 = document.querySelector(".people6")
-    const p7 = document.querySelector(".people7")
-    if (response.direction === "down") {
-      p1.classList.add("p1")
-      p2.classList.add("p2")
-      p3.classList.add("p3")
-      p4.classList.add("p4")
-      p5.classList.add("p5")
-      p6.classList.add("p6")
-      p7.classList.add("p7")
-    } else if (response.direction === "up") {
-      p1.classList.remove("p1")
-      p2.classList.remove("p2")
-      p3.classList.remove("p3")
-      p4.classList.remove("p4")
-      p5.classList.remove("p5")
-      p6.classList.remove("p6")
-      p7.classList.remove("p7")
-    } else {
-      focus.classList.remove("p1")
-      focus.classList.remove("p2")
-      focus.classList.remove("p3")
-      focus.classList.remove("p4")
-      focus.classList.remove("p5")
-      focus.classList.remove("p6")
-      focus.classList.remove("p7")
+    const peopleClasses = [
+      "people1",
+      "people2",
+      "people3",
+      "people4",
+      "people5",
+      "people6",
+      "people7",
+    ]
+    const pElements = peopleClasses.map((className) =>
+      document.querySelector(`.${className}`)
+    )
+
+    const focus = document.querySelector(".focus")
+    const xF = focus.getBoundingClientRect().x
+    const yF = focus.getBoundingClientRect().y
+
+    for (let i = 0; i < pElements.length; i++) {
+      const p = pElements[i]
+      const xP = p.getBoundingClientRect().x
+      const yP = p.getBoundingClientRect().y
+
+      const offsetX = xF - xP
+      const offsetY = yF - yP
+
+      if (response.direction === "down") {
+        p.style.transform = `translate(${offsetX}px, ${offsetY}px)`
+      } else if (response.direction === "up") {
+        p.style.transform = "translate(0, 0)"
+      } else {
+        p.style.transform = "translate(0, 0)"
+      }
     }
   }
 
   const handleStepEnterFadeBg = (response) => {
+    const focus = document.querySelector(".focus")
+    const p1 = document.querySelector(".people1")
+    console.log(focus.getBoundingClientRect())
+    console.log(p1.getBoundingClientRect())
     const bg = document.querySelector(".last")
     if (response.direction === "down") {
       bg.style.transition = "background-color 1s"
@@ -158,6 +215,23 @@ onMounted(() => {
       bg.style.backgroundColor = "white"
     }
   }
+
+  const handleStepEnterWalk = (response) => {
+    console.log("walk")
+    const wayElement = document.querySelector(".walk")
+    console.log(wayElement.getBoundingClientRect())
+  }
+
+  const init2 = () => {
+    scroller
+      .setup({
+        step: ".walk",
+        progress: true
+      })
+      .onStepProgress(handleStepEnterWalk)
+  }
+
+  // init2()
   const init = () => {
     scroller
       .setup({
@@ -184,7 +258,6 @@ onMounted(() => {
           handleStepEnterFadeBg(response)
         }
       })
-
     window.addEventListener("resize", scroller.resize)
   }
   init()
@@ -252,13 +325,15 @@ onMounted(() => {
       <div
         class="relative z-10 flex justify-center items-center text-center h-screen"
       >
-        <h1 class="h1 heading">
+        <h1
+          class="h1 text-3xl font-bold md:text-5xl md:leading-relaxed leading-relaxed"
+        >
           ออกแบบอย่างไร? <br />ให้ไม่ทิ้งใคร...ไว้ข้างหลัง
         </h1>
       </div>
       <div class="relative z-10 flex justify-center text-center h-screen">
         <div
-          class="box content text-[24px] bg-white max-w-[490px] p-5 my-auto mx-auto text-center"
+          class="box content md:text-[24px] text-[18px] max-w-[300px] bg-white md:max-w-[490px] p-5 my-auto mx-auto text-center"
         >
           <h2 class="animate__bounce">
             ทุกวันนี้เราอาศัยอยู่ในสังคมที่อุดมไปด้วยความหลากหลาย ผู้คนต่างเพศ
@@ -268,7 +343,7 @@ onMounted(() => {
       </div>
       <div class="relative z-20 flex justify-center text-center h-screen">
         <div
-          class="box2 content text-[24px] bg-white max-w-[490px] p-5 my-auto mx-auto text-center"
+          class="box2 content md:text-[24px] text-[18px] max-w-[300px] bg-white md:max-w-[490px] p-4 my-auto mx-auto text-center"
         >
           <span class="font-semibold">18% </span>
           ของประชากรไทย เป็นกลุ่มผู้สูงอายุ (60 ปีขึ้นไป) ซึ่งเท่ากับ 12 ล้านคน
@@ -283,7 +358,7 @@ onMounted(() => {
       </div>
       <div class="relative z-10 flex justify-center text-center h-screen">
         <div
-          class="box3 content text-[24px] bg-white max-w-[490px] p-5 my-auto mx-auto text-center"
+          class="box3 content md:text-[24px] text-[18px] max-w-[300px] bg-white md:max-w-[490px] p-3 my-auto mx-auto text-center"
         >
           <span class="font-semibold"
             >ขณะที่ 3.2% ของประชากรไทย เป็นคนพิการ</span
@@ -297,10 +372,11 @@ onMounted(() => {
       </div>
       <div class="relative z-10 flex justify-center h-max">
         <div
-          class="content text-[18px] bg-white max-w-[490px] p-5 my-auto mx-auto"
+          class="content md:text-[18px] text-[14px] max-w-[300px] bg-white md:max-w-[490px] p-5 my-auto mx-auto"
         >
-          <div class="text-center">
-            <span class="font-semibold text-[24px]">6 ประเภท "ความพิการ"</span
+          <div class="text-center mb-5">
+            <span class="font-bold md:text-[24px] text-[18px]"
+              >6 ประเภท "ความพิการ"</span
             ><br />
             ตามหลักเกณฑ์ของ<br />
             กระทรวงการพัฒนาสังคมและความมั่นคงของมนุษย์
@@ -314,10 +390,10 @@ onMounted(() => {
                 class="w-[60px] h-[60px] mr-[10px]"
               />
               <div>
-                <h1 class="font-bold text-[24px]">
+                <h1 class="font-bold md:text-[24px] text-[18px]">
                   ความพิการทางการเคลื่อนไหวหรือทางร่างกาย
                 </h1>
-                <p class="text-sm font-bold">1,043,192 คน</p>
+                <p class="text-xs font-bold">1,043,192 คน</p>
               </div>
             </div>
             <p class="mt-3">
@@ -337,10 +413,10 @@ onMounted(() => {
                 class="w-[60px] h-[60px] mr-[10px]"
               />
               <div>
-                <h1 class="font-bold text-[24px]">
+                <h1 class="font-bold md:text-[24px] text-[18px]">
                   ความพิการทางการได้ยินหรือสื่อความหมาย
                 </h1>
-                <p class="text-sm font-bold">394,259 คน</p>
+                <p class="text-xs font-bold">394,259 คน</p>
               </div>
             </div>
             <p class="mt-3">
@@ -360,8 +436,10 @@ onMounted(() => {
                 class="w-[60px] h-[60px] mr-[10px]"
               />
               <div>
-                <h1 class="font-bold text-[24px]">ความพิการทางการเห็น</h1>
-                <p class="text-sm font-bold">190,767 คน</p>
+                <h1 class="font-bold md:text-[24px] text-[18px]">
+                  ความพิการทางการเห็น
+                </h1>
+                <p class="text-xs font-bold">190,767 คน</p>
               </div>
             </div>
             <p class="mt-3">
@@ -380,10 +458,10 @@ onMounted(() => {
                 class="w-[60px] h-[60px] mr-[10px]"
               />
               <div>
-                <h1 class="font-bold text-[24px]">
+                <h1 class="font-bold md:text-[24px] text-[18px]">
                   ความพิการทางจิตใจ พฤติกรรม หรือออทิสติก
                 </h1>
-                <p class="text-sm font-bold">179,511 คน</p>
+                <p class="text-xs font-bold">179,511 คน</p>
               </div>
             </div>
             <p class="mt-3">
@@ -405,8 +483,10 @@ onMounted(() => {
                 class="w-[60px] h-[60px] mr-[10px]"
               />
               <div>
-                <h1 class="font-bold text-[24px]">ความพิการทางสติปัญญา</h1>
-                <p class="text-sm font-bold">142,667 คน</p>
+                <h1 class="font-bold md:text-[24px] text-[18px]">
+                  ความพิการทางสติปัญญา
+                </h1>
+                <p class="text-xs font-bold">142,667 คน</p>
               </div>
             </div>
             <p class="mt-3">
@@ -426,8 +506,10 @@ onMounted(() => {
                 class="w-[60px] h-[60px] mr-[10px]"
               />
               <div>
-                <h1 class="font-bold text-[24px]">ความพิการทางการเรียนรู้</h1>
-                <p class="text-sm font-bold">13,126 คน</p>
+                <h1 class="font-bold md:text-[24px] text-[18px]">
+                  ความพิการทางการเรียนรู้
+                </h1>
+                <p class="text-xs font-bold">13,126 คน</p>
               </div>
             </div>
             <p class="mt-3">
@@ -441,7 +523,7 @@ onMounted(() => {
           </div>
           <div class="h-[14px] bg-[#bfc6c6] w-[50px]"></div>
           <div class="my-5">
-            <h1 class="font-bold text-[18px]">
+            <h1 class="font-bold md:text-[24px] text-[14px]">
               นอกจากนี้ยังมีประชากรไทยอีก 129,073 คน ผู้มีลักษณะความพิการมากกว่า
               1 ประเภท และ รอข้อมูลยืนยัน
             </h1>
@@ -450,9 +532,9 @@ onMounted(() => {
       </div>
       <div class="relative z-10 flex justify-center text-center h-screen">
         <div
-          class="box5 content text-[24px] bg-white max-w-[490px] p-5 my-auto mx-auto text-center"
+          class="box5 content md:text-[24px] text-[18px] max-w-[300px] bg-white md:max-w-[490px] p-3 my-auto mx-auto text-center"
         >
-          <span class="font-semibold"
+          <span class="font-bold"
             >จากสถิติพอจะเห็นได้ว่า
             มีผู้สูงอายุและคนพิการอยู่ร่วมในสังคมกับเราไม่น้อย
             แล้วคุณคิดว่าสภาพแวดล้อมเมืองไทย
@@ -462,7 +544,7 @@ onMounted(() => {
       </div>
       <div class="relative z-10 flex justify-center text-center h-screen">
         <div
-          class="box-zoom content text-[24px] bg-black/70 max-w-[490px] p-5 my-auto mx-auto text-center text-white"
+          class="box-zoom content md:text-[24px] text-[18px] max-w-[300px] md:max-w-[490px] bg-black/70 p-5 my-auto mx-auto text-center text-white"
         >
           <span id="trigger-bg" class="font-semibold"
             >เรามาดูกันดีกว่าว่า การออกแบบเมืองในสังคมไทย
@@ -478,7 +560,7 @@ onMounted(() => {
       <div
         class="relative flex items-center justify-center flex-col py-32 gap-7"
       >
-        <h1 class="h1 my-10">ชีวิตในบ้าน</h1>
+        <h1 class="h1 my-10 text-4xl md:text-6xl font-bold">ชีวิตในบ้าน</h1>
         <img src="/house.jpg" alt="" class="w-[620px]" />
         <div
           class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
@@ -489,22 +571,26 @@ onMounted(() => {
             <MinusIcon v-else />
           </div>
           <div
-            class="bg-black rounded-2xl text-white grid grid-cols-2 gap-10 w-full p-8 max-w-5xl text-start"
+            class="bg-black rounded-2xl text-white grid md:grid-cols-2 md:gap-10 gap-3 w-full p-8 max-w-5xl text-start"
           >
             <div class="space-y-3">
-              <h1 class="text-4xl">
+              <h1 class="md:text-4xl text-3xl">
                 การ "พลัดตกหกล้ม" จากโครงสร้างที่ไม่รับประกันความปลอดภัย
               </h1>
-              <p class="text-zinc-400">
+              <p class="text-zinc-400 hidden md:block">
                 กดเพื่อ<span v-if="!problems[1]">ดู</span
                 ><span v-else>ซ่อน</span>รายละเอียด
               </p>
             </div>
-            <div class="text-xl">
+            <div class="md:text-xl text-[18px] content">
               <p>ผู้สูงอายุ</p>
               <p>คนพิการทางการมองเห็น</p>
               <p>คนพิการทางการเคลื่อนไหว</p>
             </div>
+            <p class="text-zinc-400 md:hidden">
+              กดเพื่อ<span v-if="!problems[1]">ดู</span
+              ><span v-else>ซ่อน</span>รายละเอียด
+            </p>
           </div>
         </div>
         <div
@@ -610,7 +696,7 @@ onMounted(() => {
             <MinusIcon v-else />
           </div>
           <div
-            class="bg-black rounded-2xl text-white w-full grid grid-cols-2 gap-10 p-8 max-w-5xl text-start"
+            class="bg-black rounded-2xl text-white grid md:grid-cols-2 md:gap-10 gap-3 w-full p-8 max-w-5xl text-start"
           >
             <div class="space-y-3">
               <h1 class="text-4xl">การตกแต่งบ้านที่ฉูดฉาดเกินไป</h1>
@@ -642,7 +728,9 @@ onMounted(() => {
       <div
         class="relative flex items-center justify-center flex-col py-32 gap-3"
       >
-        <h1 class="h1 my-10">ชีวิตกับการเดินทาง</h1>
+        <h1 class="h1 my-10 text-4xl md:text-6xl font-bold">
+          ชีวิตกับการเดินทาง
+        </h1>
         <img
           src="https://d24sx0drox09ud.cloudfront.net/transport.jpg"
           alt=""
@@ -673,18 +761,23 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-show="problems[3]" class="content max-w-[650px] text-[24px] my-20">
+        <div
+          v-show="problems[3]"
+          class="content max-w-[650px] text-[24px] my-20"
+        >
           <img
             src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/wheelchair.c10f8c0.png"
             alt=""
             class="mx-auto"
             style="position: sticky; top: 0"
           />
-          <img
-            src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/footpath.c40683c.png"
-            alt=""
-            class="w-40"
-          />
+          <div class="walk">
+            <img
+              src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/footpath.c40683c.png"
+              alt=""
+              class="w-40"
+            />
+          </div>
         </div>
         <div
           class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
@@ -853,7 +946,9 @@ onMounted(() => {
       <div
         class="relative flex items-center justify-center flex-col py-32 gap-3"
       >
-        <h1 class="h1 my-10">ชีวิตในพื้นที่สาธารณะ</h1>
+        <h1 class="h1 my-10 text-4xl md:text-6xl font-bold">
+          ชีวิตในพื้นที่สาธารณะ
+        </h1>
         <img
           src="https://d24sx0drox09ud.cloudfront.net/public.jpg"
           alt=""
@@ -1026,7 +1121,7 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-show="problems[10]" class="content  text-[24px] text-center">
+        <div v-show="problems[10]" class="content text-[24px] text-center">
           <p class="max-w-[650px] mx-auto my-20">
             สำหรับคนพิการในกลุ่มออทิสติก
             พื้นที่สาธารณะที่มีความพลุกพล่านและเต็มไปด้วยสิ่งเร้า เช่น
@@ -1035,13 +1130,19 @@ onMounted(() => {
             ไป รู้สึกอึดอัดหรือไม่สบายใจได้
             เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
           </p>
-          <img src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/crowd.447b5c6.jpg" alt="">
+          <img
+            src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/crowd.447b5c6.jpg"
+            alt=""
+          />
           <p class="max-w-[650px] mx-auto my-20">
             นอกจากนี้
             ไม่เพียงแค่สิ่งปลูกสร้างเท่านั้นที่ยังไม่ตอบโจทย์ความต้องการของคนพิการอย่างแท้จริง
             ยังมีการออกแบบในอีกหลายแง่มุม
-            ที่ไม่ได้ถูกสร้างขึ้นเพื่อรองรับคนพิการบางประเภท เช่น <span class="font-bold">สื่อต่าง ๆ
-            ซึ่งไม่ได้มีคำบรรยาย หรือล่ามภาษามือคอยแปลให้เสมอไป</span> 
+            ที่ไม่ได้ถูกสร้างขึ้นเพื่อรองรับคนพิการบางประเภท เช่น
+            <span class="font-bold"
+              >สื่อต่าง ๆ ซึ่งไม่ได้มีคำบรรยาย
+              หรือล่ามภาษามือคอยแปลให้เสมอไป</span
+            >
             ทำให้คนพิการในกลุ่มที่บกพร่องทางการได้ยิน
             เผชิญอุปสรรคอย่างมากในการรับสื่อ
           </p>
@@ -1110,7 +1211,7 @@ onMounted(() => {
         </h1>
       </div>
       <div
-        class="flex flex-col items-center justify-center text-black w-2/5 mx-auto gap-20"
+        class="flex flex-col items-center justify-center text-white w-2/5 mx-auto gap-20"
       >
         <p class="text-3xl content text-center">
           Universal Design
@@ -1120,7 +1221,7 @@ onMounted(() => {
           สิ่งอำนวยความสะดวกเพียงเท่านี้ แต่รวมถึง การบริการรูปแบบต่าง ๆ อีกด้วย
           โดยอาจเรียกรวม ๆ ว่า Urban Design
         </p>
-        <p class="text-3xl font-bold">
+        <p class="text-3xl font-bold text-center">
           Universal Design ให้ความสำคัญกับองค์ประกอบ 7 อย่าง
         </p>
         <div>
@@ -1162,7 +1263,9 @@ onMounted(() => {
         </p>
       </div>
     </div>
-    <div class="flex flex-col items-center justify-center bg-white relative">
+    <div
+      class="flex flex-col items-center justify-center bg-white relative py-32"
+    >
       <h1 class="font-bold text-3xl">
         มาดูกันดีกว่าว่า Universal Design <br />ช่วยแก้ปัญหาอะไรให้เราได้บ้าง
       </h1>
@@ -1216,8 +1319,6 @@ onMounted(() => {
 }
 .h1 {
   font-family: "Anuphan", sans-serif;
-  font-weight: 700;
-  font-size: 48px;
 }
 
 #intro_bg {
@@ -1248,22 +1349,12 @@ onMounted(() => {
   transition: transform 2s ease;
 }
 
-.people1 {
-  top: 7%;
-  left: 80%;
-}
-
 .last {
   transition: opacity 1s, transform 1s;
 }
-.p1 {
+/* .p1 {
   z-index: 30 !important;
   transform: translate(-610px, 1099px);
-}
-
-.people2 {
-  top: 5%;
-  left: 67%;
 }
 
 .p2 {
@@ -1294,6 +1385,14 @@ onMounted(() => {
 .p7 {
   z-index: 30 !important;
   transform: translate(827px, 981px);
+} */
+.people1 {
+  top: 7%;
+  left: 80%;
+}
+.people2 {
+  top: 5%;
+  left: 67%;
 }
 .people3 {
   top: 200px;
