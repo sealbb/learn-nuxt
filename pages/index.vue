@@ -10,6 +10,12 @@ const policy = ref(false)
 const handdlePolicy = () => {
   policy.value = false
 }
+
+const problems = ref([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
+
+const handleProblem = (problem) => {
+  problems.value[problem] = !problems.value[problem]
+}
 const box1 = ref(false)
 const handleBox1 = () => {
   box1.value = !box1.value
@@ -17,6 +23,11 @@ const handleBox1 = () => {
 const box2 = ref(false)
 const handleBox2 = () => {
   box2.value = !box2.value
+}
+
+const box3 = ref(false)
+const handleBox3 = () => {
+  box3.value = !box3.value
 }
 
 const scroller = scrollama()
@@ -137,10 +148,13 @@ onMounted(() => {
   const handleStepEnterFadeBg = (response) => {
     const bg = document.querySelector(".last")
     if (response.direction === "down") {
+      bg.style.transition = "background-color 1s"
       bg.style.backgroundColor = "black"
     } else if (response.direction === "up") {
+      bg.style.transition = "background-color 1s"
       bg.style.backgroundColor = "white"
     } else {
+      bg.style.transition = "background-color 1s"
       bg.style.backgroundColor = "white"
     }
   }
@@ -468,10 +482,10 @@ onMounted(() => {
         <img src="/house.jpg" alt="" class="w-[620px]" />
         <div
           class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
-          @click="handleBox1"
+          @click="handleProblem(1)"
         >
           <div class="text-3xl mr-4">
-            <PlusIcon v-if="!box1" />
+            <PlusIcon v-if="!problems[1]" />
             <MinusIcon v-else />
           </div>
           <div
@@ -482,7 +496,7 @@ onMounted(() => {
                 การ "พลัดตกหกล้ม" จากโครงสร้างที่ไม่รับประกันความปลอดภัย
               </h1>
               <p class="text-zinc-400">
-                กดเพื่อ<span v-if="!box1">ดู</span
+                กดเพื่อ<span v-if="!problems[1]">ดู</span
                 ><span v-else>ซ่อน</span>รายละเอียด
               </p>
             </div>
@@ -493,18 +507,106 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-show="box1" class="content max-w-[650px] text-[24px]">
-          การพลัดตกหกล้มในผู้สูงอายุเป็นสาเหตุการเสียชีวิตอันดับสอง
-          รองจากอุบัติเหตุจากการขนส่ง มีผู้เสียชีวิตมากกว่า 1,000 คนต่อปี
-          อ้างอิงจาก ข้อมูลมรณบัตร กองยุทธศาสตร์และแผนงาน
-          สำนักงานปลัดกระทรวงสาธารณสุข
+        <div
+          v-show="problems[1]"
+          class="content max-w-[650px] text-center flex flex-col justify-center items-center gap-10"
+        >
+          <div>
+            <h1 class="text-[24px]">
+              การพลัดตกหกล้มในผู้สูงอายุเป็นสาเหตุการเสียชีวิตอันดับสอง รอง<br />จากอุบัติเหตุจากการขนส่ง
+              มีผู้เสียชีวิตมากกว่า 1,000 คนต่อปี
+            </h1>
+
+            อ้างอิงจาก ข้อมูลมรณบัตร กองยุทธศาสตร์และแผนงาน
+            สำนักงานปลัดกระทรวงสาธารณสุข
+          </div>
+          <div class="border-b-2 w-full flex justify-center">
+            <img
+              src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/tomb.67920ff.svg"
+              alt=""
+            />
+          </div>
+          <h2 class="text-xl font-bold">
+            จำนวนผู้สูงอายุ 60 ปีขึ้นไป ที่เสียชีวิตจากการพลัดตกหกล้ม (คน)
+          </h2>
+          <div class="flex gap-1">
+            <div>
+              <h3 class="content font-bold text-zinc-400 p-2">2555</h3>
+              <div class="bg-red-500 h-52 w-20">
+                <p class="text-white py-7 font-semibold rotate-90 text-3xl">
+                  728
+                </p>
+              </div>
+            </div>
+            <div>
+              <h3 class="content font-bold text-zinc-400 p-2">2556</h3>
+              <div class="bg-red-500 h-56 w-20">
+                <p class="text-white py-7 font-semibold rotate-90 text-3xl">
+                  802
+                </p>
+              </div>
+            </div>
+            <div>
+              <h3 class="content font-bold text-zinc-400 p-2">2557</h3>
+              <div class="bg-red-500 h-60 w-20">
+                <p class="text-white py-7 font-semibold rotate-90 text-3xl">
+                  909
+                </p>
+              </div>
+            </div>
+            <div>
+              <h3 class="content font-bold text-zinc-400 p-2">2558</h3>
+              <div class="bg-red-500 h-64 w-20">
+                <p class="text-white py-7 font-semibold rotate-90 text-3xl">
+                  1,049
+                </p>
+              </div>
+            </div>
+            <div>
+              <h3 class="content font-bold text-zinc-400 p-2">2559</h3>
+              <div class="bg-red-500 h-52 w-20">
+                <p class="text-white py-7 font-semibold rotate-90 text-3xl">
+                  888
+                </p>
+              </div>
+            </div>
+            <div>
+              <h3 class="content font-bold text-zinc-400 p-2">2560</h3>
+              <div class="bg-red-500 h-60 w-20">
+                <p class="text-white py-7 font-semibold rotate-90 text-3xl">
+                  1,046
+                </p>
+              </div>
+            </div>
+            <div>
+              <h3 class="content font-bold text-zinc-400 p-2">2561</h3>
+              <div class="bg-red-500 h-72 w-20">
+                <p class="text-white py-7 font-semibold rotate-90 text-3xl">
+                  1,258
+                </p>
+              </div>
+            </div>
+            <div>
+              <h3 class="content font-bold text-zinc-400 p-2">2562</h3>
+              <div class="bg-red-500 h-80 w-20">
+                <p class="text-white py-7 font-semibold rotate-90 text-3xl">
+                  1,318
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="text-2xl">
+            โดย
+            <span class="font-bold text-red-500">31%</span>
+            เป็นการหกล้มภายในบ้าน
+          </div>
         </div>
         <div
           class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
-          @click="handleBox2"
+          @click="handleProblem(2)"
         >
           <div class="text-3xl mr-4">
-            <PlusIcon v-if="!box2" />
+            <PlusIcon v-if="!problems[2]" />
             <MinusIcon v-else />
           </div>
           <div
@@ -513,7 +615,7 @@ onMounted(() => {
             <div class="space-y-3">
               <h1 class="text-4xl">การตกแต่งบ้านที่ฉูดฉาดเกินไป</h1>
               <p class="text-zinc-400">
-                กดเพื่อ<span v-if="!box1">ดู</span
+                กดเพื่อ<span v-if="!problems[2]">ดู</span
                 ><span v-else>ซ่อน</span>รายละเอียด
               </p>
             </div>
@@ -522,7 +624,10 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-show="box2" class="content max-w-[650px] text-[24px]">
+        <div
+          v-show="problems[2]"
+          class="content max-w-[650px] text-[24px] text-center my-20"
+        >
           การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
           อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
           แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
@@ -545,10 +650,10 @@ onMounted(() => {
         />
         <div
           class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
-          @click="handleBox1"
+          @click="handleProblem(3)"
         >
           <div class="text-3xl mr-4">
-            <PlusIcon v-if="!box1" />
+            <PlusIcon v-if="!problems[3]" />
             <MinusIcon v-else />
           </div>
           <div
@@ -557,7 +662,7 @@ onMounted(() => {
             <div class="space-y-3">
               <h1 class="text-4xl">ชีวิตบนทางเท้ากับอุปสรรคในรูปแบบต่าง ๆ</h1>
               <p class="text-zinc-400">
-                กดเพื่อ<span v-if="!box1">ดู</span
+                กดเพื่อ<span v-if="!problems[3]">ดู</span
                 ><span v-else>ซ่อน</span>รายละเอียด
               </p>
             </div>
@@ -568,18 +673,25 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-show="box1" class="content max-w-[650px] text-[24px]">
-          การพลัดตกหกล้มในผู้สูงอายุเป็นสาเหตุการเสียชีวิตอันดับสอง
-          รองจากอุบัติเหตุจากการขนส่ง มีผู้เสียชีวิตมากกว่า 1,000 คนต่อปี
-          อ้างอิงจาก ข้อมูลมรณบัตร กองยุทธศาสตร์และแผนงาน
-          สำนักงานปลัดกระทรวงสาธารณสุข
+        <div v-show="problems[3]" class="content max-w-[650px] text-[24px] my-20">
+          <img
+            src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/wheelchair.c10f8c0.png"
+            alt=""
+            class="mx-auto"
+            style="position: sticky; top: 0"
+          />
+          <img
+            src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/footpath.c40683c.png"
+            alt=""
+            class="w-40"
+          />
         </div>
         <div
           class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
-          @click="handleBox2"
+          @click="handleProblem(4)"
         >
           <div class="text-3xl mr-4">
-            <PlusIcon v-if="!box2" />
+            <PlusIcon v-if="!problems[4]" />
             <MinusIcon v-else />
           </div>
           <div
@@ -588,7 +700,7 @@ onMounted(() => {
             <div class="space-y-3">
               <h1 class="text-4xl">เบรลล์บล็อกที่ไม่ต่อเนื่อง</h1>
               <p class="text-zinc-400">
-                กดเพื่อ<span v-if="!box1">ดู</span
+                กดเพื่อ<span v-if="!problems[4]">ดู</span
                 ><span v-else>ซ่อน</span>รายละเอียด
               </p>
             </div>
@@ -597,23 +709,53 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-show="box2" class="content max-w-[650px] text-[24px]">
-          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
-          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
-          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
-          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
-          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
-          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
-          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
-          รู้สึกอึดอัดหรือไม่สบายใจได้
-          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        <div v-show="problems[4]" class="content text-[24px]">
+          <p class="text-center max-w-[650px] mx-auto">
+            สำหรับคนพิการทางด้านการมองเห็น
+            เบรลล์บล็อกเปรียบเสมือนแผนที่นำทางในความมืด แต่จะเป็นอย่างไร
+            หากพื้นที่นั้นขาด ๆ หาย ๆ ไม่มีความต่อเนื่อง
+          </p>
+          <div class="flex overflow-x-auto w-full">
+            <img
+              src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/block_illus.2008475.svg"
+              alt=""
+            />
+            <img
+              src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/block_illus.2008475.svg"
+              alt=""
+            />
+            <img
+              src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/block_illus.2008475.svg"
+              alt=""
+            />
+            <img
+              src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/block_illus.2008475.svg"
+              alt=""
+            />
+            <img
+              src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/block_illus.2008475.svg"
+              alt=""
+            />
+            <img
+              src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/block_illus.2008475.svg"
+              alt=""
+            />
+            <img
+              src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/block_illus.2008475.svg"
+              alt=""
+            />
+            <img
+              src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/block_illus.2008475.svg"
+              alt=""
+            />
+          </div>
         </div>
         <div
           class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
-          @click="handleBox2"
+          @click="handleProblem(5)"
         >
           <div class="text-3xl mr-4">
-            <PlusIcon v-if="!box2" />
+            <PlusIcon v-if="!problems[5]" />
             <MinusIcon v-else />
           </div>
           <div
@@ -624,7 +766,7 @@ onMounted(() => {
                 รถไฟฟ้าและสิ่งอำนวยความสะดวกที่ไม่ได้มีทุกทางออก
               </h1>
               <p class="text-zinc-400">
-                กดเพื่อ<span v-if="!box1">ดู</span
+                กดเพื่อ<span v-if="!problems[5]">ดู</span
                 ><span v-else>ซ่อน</span>รายละเอียด
               </p>
             </div>
@@ -635,23 +777,34 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-show="box2" class="content max-w-[650px] text-[24px]">
-          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
-          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
-          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
-          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
-          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
-          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
-          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
-          รู้สึกอึดอัดหรือไม่สบายใจได้
-          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        <div v-show="problems[5]" class="content text-[24px] text-center">
+          <p class="max-w-[650px] mx-auto">
+            เมื่อเดินทางมาถึงขนส่งสาธารณะ อย่างรถไฟฟ้า
+            คนพิการทางการเคลื่อนไหวก็ยังต้องเผชิญกับข้อจำกัด เช่น
+            ทางลาดหรือลิฟต์ ที่แม้ตามกฎหมายจะมีอยู่ทุกสถานี
+            แต่ไม่ได้มีอยู่ในทุกทางออก
+          </p>
+
+          <img
+            src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/map.6023050.png"
+            alt=""
+            class="w-full"
+          />
+          <p>
+            ใน <span class="font-bold">116 สถานี</span>
+            <br />มีลิฟต์ครบทุกทางออก เพียง
+            <span class="font-bold">10 สถานี</span>
+            <br />มีลิฟต์แต่ไม่ครบทุกทางออก
+            <span class="font-bold">103 สถานี</span>
+            <br />ไม่มีลิฟต์ตามทางออกเลย <span class="font-bold">3 สถานี</span>
+          </p>
         </div>
         <div
           class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
-          @click="handleBox2"
+          @click="handleProblem(6)"
         >
           <div class="text-3xl mr-4">
-            <PlusIcon v-if="!box2" />
+            <PlusIcon v-if="!problems[6]" />
             <MinusIcon v-else />
           </div>
           <div
@@ -660,7 +813,7 @@ onMounted(() => {
             <div class="space-y-3">
               <h1 class="text-4xl">รถเมล์ที่ไม่ใช่ทุกคนจะขึ้นสะดวก</h1>
               <p class="text-zinc-400">
-                กดเพื่อ<span v-if="!box1">ดู</span
+                กดเพื่อ<span v-if="!problems[6]">ดู</span
                 ><span v-else>ซ่อน</span>รายละเอียด
               </p>
             </div>
@@ -671,16 +824,30 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-show="box2" class="content max-w-[650px] text-[24px]">
-          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
-          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
-          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
-          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
-          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
-          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
-          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
-          รู้สึกอึดอัดหรือไม่สบายใจได้
-          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        <div
+          v-show="problems[6]"
+          class="content max-w-[650px] text-[24px] text-center"
+        >
+          รถเมล์ ซึ่งเป็นขนส่งสาธารณะพื้นฐานที่ราคาประหยัดกว่า
+          ก็เต็มไปด้วยข้อจำกัดสำหรับคนพิการ ตั้งแต่การตั้งป้ายรถเมล์
+          ซึ่งหลายจุดมีเสาไฟฟ้า หรือสิ่งกีดขวางอื่นบดบัง ทำให้ยากต่อการสังเกต
+          และเป็นอุปสรรคของคนพิการทางการได้ยิน หรือการขึ้น - ลงรถเมล์
+          ที่แม้คนพิการทางการเคลื่อนไหว จะสามารถเลือกใช้บริการรถเมล์แบบชานต่ำ
+          (Low Entry) ได้ แต่ก็ไม่ใช่ทุกสายที่ให้บริการรถเมล์ชนิดนี้
+
+          <p>
+            รถเมล์ของ ขสมก. ที่ให้บริการใน กทม. และปริมณฑลมีทั้งหมด 2,888 คัน
+            ในจำนวนนี้เป็นรถเมล์ชานต่ำ (Low Entry) จำนวน 489 คัน
+          </p>
+
+          <p>
+            นั่นหมายความว่า<br />
+            <span class="font-bold"
+              >โดยคร่าว ๆ เรามีโอกาสพบเจอ
+              <span class="bg-lime-300">รถเมล์ชานต่ำ 1 คัน</span> จากรถเมล์ 6
+              คันที่แล่นผ่าน</span
+            >
+          </p>
         </div>
       </div>
       <div
@@ -694,10 +861,10 @@ onMounted(() => {
         />
         <div
           class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
-          @click="handleBox1"
+          @click="handleProblem(7)"
         >
           <div class="text-3xl mr-4">
-            <PlusIcon v-if="!box1" />
+            <PlusIcon v-if="!problems[7]" />
             <MinusIcon v-else />
           </div>
           <div
@@ -706,7 +873,7 @@ onMounted(() => {
             <div class="space-y-3">
               <h1 class="text-4xl">ป้ายชวนสับสน</h1>
               <p class="text-zinc-400">
-                กดเพื่อ<span v-if="!box1">ดู</span
+                กดเพื่อ<span v-if="!problems[7]">ดู</span
                 ><span v-else>ซ่อน</span>รายละเอียด
               </p>
             </div>
@@ -719,18 +886,42 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-show="box1" class="content max-w-[650px] text-[24px]">
-          การพลัดตกหกล้มในผู้สูงอายุเป็นสาเหตุการเสียชีวิตอันดับสอง
-          รองจากอุบัติเหตุจากการขนส่ง มีผู้เสียชีวิตมากกว่า 1,000 คนต่อปี
-          อ้างอิงจาก ข้อมูลมรณบัตร กองยุทธศาสตร์และแผนงาน
-          สำนักงานปลัดกระทรวงสาธารณสุข
+        <div v-show="problems[7]" class="content text-[24px] text-center">
+          <p class="max-w-[650px] mx-auto my-8">
+            สำหรับคนพิการทางการได้ยินซึ่งต้องรับข้อมูลรอบตัวต่าง ๆ ผ่านการสังเกต
+            ป้ายสถานีรถไฟฟ้า ป้ายบอกซอย ป้ายรถเมล์ ฯลฯ
+            ที่มีขนาดเล็กหรือมีวัตถุบดบัง เมื่อมองจากระยะไกล
+            หลายครั้งอาจทำให้คนพิการสังเกตไม่ทันและกลายเป็นอุปสรรคใหญ่ในการเดินทางได้
+          </p>
+          <img
+            src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/p3_1_1.b4a5eec.jpg"
+            alt=""
+          />
+          <p class="max-w-[650px] mx-auto my-8">
+            ขณะที่การอ่านป้ายบอกชื่อสถานี หรือขั้นตอนการซื้อตั๋ว
+            อาจเป็นกิจวัตรทั่วไป ที่ไม่ได้สลับซับซ้อนสำหรับใครหลาย ๆ คน
+            แต่สำหรับคนพิการทางด้านสติปัญญา หรือด้านการเรียนรู้บางกลุ่ม
+            ซึ่งมีภาวะบกพร่องทางสมอง
+            ที่ส่งผลให้พวกเขาไม่สามารถเชื่อมโยงตัวอักษรหรือคำ กับความหมายได้
+            การอ่านป้ายที่มีคำ หรือประโยคยาว ๆ
+            จึงอาจจะกลายเป็นอุปสรรคที่ทำให้ชีวิตของพวกเขาไม่ง่ายนัก
+          </p>
+          <img
+            class="mx-auto w-80"
+            src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/p3_1_2.613b032.jpg"
+            alt=""
+          />
+          <p class="max-w-[650px] mx-auto my-8">
+            คนพิการทางด้านสติปัญญาและการเรียนรู้
+            จดจำป้ายบอกทางด้วยรูปลักษณ์ของตัวอักษร ไม่ใช่ความหมาย
+          </p>
         </div>
         <div
           class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
-          @click="handleBox2"
+          @click="handleProblem(8)"
         >
           <div class="text-3xl mr-4">
-            <PlusIcon v-if="!box2" />
+            <PlusIcon v-if="!problems[8]" />
             <MinusIcon v-else />
           </div>
           <div
@@ -739,7 +930,7 @@ onMounted(() => {
             <div class="space-y-3">
               <h1 class="text-4xl">สวนสาธารณะมีสิ่งอำนวยความสะดวกไม่เพียงพอ</h1>
               <p class="text-zinc-400">
-                กดเพื่อ<span v-if="!box1">ดู</span
+                กดเพื่อ<span v-if="!problems[8]">ดู</span
                 ><span v-else>ซ่อน</span>รายละเอียด
               </p>
             </div>
@@ -748,23 +939,45 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-show="box2" class="content max-w-[650px] text-[24px]">
-          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
-          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
-          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
-          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
-          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
-          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
-          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
-          รู้สึกอึดอัดหรือไม่สบายใจได้
-          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        <div v-show="problems[8]" class="content text-[24px] flex my-20">
+          <div class="flex-col flex justify-end items-end">
+            <img
+              src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/night.017c216.jpg"
+              alt=""
+            />
+            <div
+              class="text-right w-96 flex flex-col justify-end items-end mt-24 pr-12"
+            >
+              <h1 class="font-bold">
+                ม้านั่งที่ออกแบบมาให้หันหน้าไปในทิศเดียวกัน
+              </h1>
+              <p>
+                ทำให้การสื่อสารด้วยภาษามือ
+                ซึ่งต้องหันหน้าเข้าหากันกลายเป็นเรื่องยาก
+                โดยเฉพาะการสื่อสารมากกว่า 2 คนขึ้นไป
+              </p>
+            </div>
+          </div>
+          <div>
+            <div class="p-5 mb-20 pl-12 w-96">
+              <h1 class="font-bold">แสงสว่างในสวนสาธารณะที่ไม่เพียงพอ</h1>
+              <p>
+                ทำให้การสื่อสารในช่วงเวลาค่ำของคนพิการทางการได้ยิน
+                ที่ต้องอาศัยท่าทาง ยากยิ่งขึ้นไปอีก
+              </p>
+            </div>
+            <img
+              src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/day.66b96f2.jpg"
+              alt=""
+            />
+          </div>
         </div>
         <div
           class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
-          @click="handleBox2"
+          @click="handleProblem(9)"
         >
           <div class="text-3xl mr-4">
-            <PlusIcon v-if="!box2" />
+            <PlusIcon v-if="!problems[9]" />
             <MinusIcon v-else />
           </div>
           <div
@@ -773,7 +986,7 @@ onMounted(() => {
             <div class="space-y-3">
               <h1 class="text-4xl">การเลือกซื้อสินค้า</h1>
               <p class="text-zinc-400">
-                กดเพื่อ<span v-if="!box1">ดู</span
+                กดเพื่อ<span v-if="!problems[9]">ดู</span
                 ><span v-else>ซ่อน</span>รายละเอียด
               </p>
             </div>
@@ -782,23 +995,20 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-show="box2" class="content max-w-[650px] text-[24px]">
-          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
-          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
-          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
-          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
-          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
-          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
-          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
-          รู้สึกอึดอัดหรือไม่สบายใจได้
-          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        <div v-show="problems[9]" class="content max-w-[650px] text-[24px]">
+          <div>
+            <img
+              src="	data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTc1IiBo…2IDExOC40MjJaIiBmaWxsPSIjMTcxNzE3Ii8+Cjwvc3ZnPgo="
+              alt=""
+            />
+          </div>
         </div>
         <div
           class="flex items-center cursor-pointer w-full lg:max-w-[1280px] mx-auto justify-center"
-          @click="handleBox2"
+          @click="handleProblem(10)"
         >
           <div class="text-3xl mr-4">
-            <PlusIcon v-if="!box2" />
+            <PlusIcon v-if="!problems[10]" />
             <MinusIcon v-else />
           </div>
           <div
@@ -807,7 +1017,7 @@ onMounted(() => {
             <div class="space-y-3">
               <h1 class="text-4xl">สถานที่พลุกพล่าน</h1>
               <p class="text-zinc-400">
-                กดเพื่อ<span v-if="!box1">ดู</span
+                กดเพื่อ<span v-if="!problems[10]">ดู</span
                 ><span v-else>ซ่อน</span>รายละเอียด
               </p>
             </div>
@@ -816,16 +1026,25 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-show="box2" class="content max-w-[650px] text-[24px]">
-          การตกแต่งภายในตัวบ้าน ด้วยผนัง พื้น หรือหลอดไฟหลากสีสัน
-          อาจเป็นสไตล์ที่ดูสดใส จัดจ้านสำหรับใครหลายคน
-          แต่สิ่งเหล่านี้กลับเป็นอุปสรรคสำหรับคนพิการในกลุ่มอาการออทิสติก
-          ซึ่งมักมีจุดร่วมกันตรงที่ความอ่อนไหวต่อสิ่งเร้าตามประสาทสัมผัสต่าง ๆ
-          ซึ่งพวกเขาจะสามารถรับรู้ได้มากกว่าคนปกติ เช่น
-          สภาพแวดล้อมในบ้านที่มีแสงจ้า ไฟกะพริบ สีที่มากกว่า 3 - 4 สี
-          เสียงจากแหล่งกำเนิดหลายแหล่ง สิ่งเหล่านี้อาจทำให้คนพิการในกลุ่มนี้
-          รู้สึกอึดอัดหรือไม่สบายใจได้
-          เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+        <div v-show="problems[10]" class="content  text-[24px] text-center">
+          <p class="max-w-[650px] mx-auto my-20">
+            สำหรับคนพิการในกลุ่มออทิสติก
+            พื้นที่สาธารณะที่มีความพลุกพล่านและเต็มไปด้วยสิ่งเร้า เช่น
+            มีผู้คนจำนวนมาก หรือมีเสียงจากหลากหลายแหล่งที่มา
+            อาจทำให้คนพิการในกลุ่มนี้ ซึ่งสามารถรับรู้สิ่งเร้าได้มากกว่าคนทั่ว ๆ
+            ไป รู้สึกอึดอัดหรือไม่สบายใจได้
+            เนื่องจากจะทำให้พวกเขาไม่รู้ว่าจะต้องโฟกัสอยู่ที่จุดไหน
+          </p>
+          <img src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/crowd.447b5c6.jpg" alt="">
+          <p class="max-w-[650px] mx-auto my-20">
+            นอกจากนี้
+            ไม่เพียงแค่สิ่งปลูกสร้างเท่านั้นที่ยังไม่ตอบโจทย์ความต้องการของคนพิการอย่างแท้จริง
+            ยังมีการออกแบบในอีกหลายแง่มุม
+            ที่ไม่ได้ถูกสร้างขึ้นเพื่อรองรับคนพิการบางประเภท เช่น <span class="font-bold">สื่อต่าง ๆ
+            ซึ่งไม่ได้มีคำบรรยาย หรือล่ามภาษามือคอยแปลให้เสมอไป</span> 
+            ทำให้คนพิการในกลุ่มที่บกพร่องทางการได้ยิน
+            เผชิญอุปสรรคอย่างมากในการรับสื่อ
+          </p>
         </div>
       </div>
     </div>
@@ -938,13 +1157,20 @@ onMounted(() => {
           โดยหลักการเหล่านี้ ไม่เพียงแค่นักออกแบบ วิศวกร
           หรือสถาปนิกเท่านั้นที่ต้องคำนึงถึง
           แต่หากเราตั้งใจจะสร้างเมืองที่เหมาะสมกับทุกคน.....อย่างแท้จริง
-          <span class="font-bold"> Universal Design</span> ก็เป็นแนวคิดที่ทุกคนในสังคมต้องใส่ใจ และให้ความสำคัญ
+          <span class="font-bold"> Universal Design</span>
+          ก็เป็นแนวคิดที่ทุกคนในสังคมต้องใส่ใจ และให้ความสำคัญ
         </p>
       </div>
     </div>
-    <div class="flex flex-col items-center justify-center">
-      <h1>มาดูกันดีกว่าว่า Universal Design ช่วยแก้ปัญหาอะไรให้เราได้บ้าง</h1>
-
+    <div class="flex flex-col items-center justify-center bg-white relative">
+      <h1 class="font-bold text-3xl">
+        มาดูกันดีกว่าว่า Universal Design <br />ช่วยแก้ปัญหาอะไรให้เราได้บ้าง
+      </h1>
+      <img
+        class="m-20"
+        src="https://thevisual.thaipbs.or.th/universaldesign/_nuxt/img/solve_icon.3045fad.svg"
+        alt=""
+      />
     </div>
   </div>
 </template>
